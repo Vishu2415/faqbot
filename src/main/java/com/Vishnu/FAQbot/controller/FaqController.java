@@ -37,5 +37,10 @@ public class FaqController {
     public String askWithAI(@RequestBody String userQuestion) {
         return faqService.findBestAnswerByAi(userQuestion);
     }
+
+    @GetMapping("/search")
+    public List<Faq> searchFaqs(@RequestParam String keyword) {
+        return faqService.searchFaqs(keyword);
+    }
 }
 

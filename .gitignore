@@ -16,7 +16,6 @@ target/
 # Ignore sensitive config
 src/main/resources/application.properties
 
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
