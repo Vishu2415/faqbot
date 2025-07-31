@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FAQBot</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h2>🤖 Ask the FAQBot</h2>
+
+<input type="text" id="questionInput" placeholder="Ask your question here..." />
+<button onclick="askFaq()">Ask</button>
+
+<p id="answerDisplay">...</p>
+
+<script>
+    function askFaq() {
+        const question = document.getElementById("questionInput").value;
+
+        fetch("http://localhost:8080/faq/ask/ai", {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain"
+            },
+            body: question
+        })
+            .then(response => response.text())
+            .then(answer => {
+                // If full JSON comes from OpenRouter, extract answer
+                try {
+                    const json = JSON.parse(answer);
+                    const content = json.choices[0].message.content;
+                    document.getElementById("answerDisplay").innerText = content;
+                } catch (e) {
+                    document.getElementById("answerDisplay").innerText = answer;
+                }
+            })
+            .catch(error => {
+                document.getElementById("answerDisplay").innerText = "Error: " + error;
+            });
+    }
+</script>
+</body>
+</html>
